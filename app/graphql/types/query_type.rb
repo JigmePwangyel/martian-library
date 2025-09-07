@@ -26,5 +26,11 @@ module Types
     def items
       Item.all
     end
+
+    field :me, Types::UserType, null: false, description: "Return the current user information"
+
+    def me
+      context[:current_user] || raise(Graphql::ExecutionError, "Authentication required")
+    end
   end
 end
