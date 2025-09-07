@@ -1,13 +1,11 @@
 module Mutations
   class AddItemMutation < BaseMutation
-    argument :title, String, required: true
-    argument :description, String, required: false
-    argument :image_url, String, required: false
+    argument :attributes, Attributes::ItemAttribute, required: true
 
     field :item, Types::ItemType, null: true
     field :errors, [ String ], null: false
 
-    def resolve(title:, description: nil, image_url: nil)
+    def resolve(attributes:)
       if context[:current_user].nil?
         raise GraphQL::ExecutionError, "Authentication required"
       end
